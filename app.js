@@ -17,29 +17,53 @@ function randomize(values) {
 var option;
 var incorrectAns;
 var correctAnswer;
-
+var apiIndexQues = 0;
 var totalQuestions;
-function displayQuestions(response) {
-  totalQuestions = response.data.results;
-  console.log(totalQuestions);
+var all_json_data;
+function displayQuestions(apiIndexQues) {
   let displayQuesElement = document.getElementById("displayQues");
   option = document.querySelectorAll(".option");
-  incorrectAns = response.data.results[0].incorrect_answers;
-  correctAnswer = response.data.results[0].correct_answer;
+  incorrectAns = [...all_json_data[apiIndexQues].incorrect_answers];
+  correctAnswer = all_json_data[apiIndexQues].correct_answer;
 
   incorrectAns.push(correctAnswer);
+  console.log(incorrectAns);
   randomize(incorrectAns);
 
-  displayQuesElement.innerHTML = response.data.results[0].question;
+  displayQuesElement.innerHTML = all_json_data[apiIndexQues].question;
   for (let i = 0; i < incorrectAns.length; i++) {
     option[i].nextElementSibling.innerText = incorrectAns[i];
   }
-  function nextButton() {}
-  var next = document.getElementById("btn");
-  next.addEventListener("click", nextButton);
 }
 
-// document.getElementById("choice3").checked = true;
+//next Button
+function nextButton() {
+  apiIndexQues++;
+  displayQuestions(apiIndexQues);
+}
+
+var next = document.getElementById("btn");
+next.addEventListener("click", nextButton);
+
+// previous Button
+function previousButton() {
+  console.log(apiIndexQues);
+  apiIndexQues--;
+  displayQuestions(apiIndexQues);
+}
+var previous = document.getElementById("btn2");
+previous.addEventListener("click", previousButton);
+// Radio Button
+function userSelectedAnswer(index) {
+  let userSelectedIndex = index.target.value;
+  userSelectedIndex = userSelectedIndex.slice(userSelectedIndex.length - 1) - 1;
+  console.log(userSelectedIndex);
+}
+
+const choiceText = document.getElementsByName("answer");
+for (var i = 0; i < choiceText.length; i++) {
+  choiceText[i].addEventListener("click", userSelectedAnswer);
+}
 
 function checkAnswer() {
   const radioButton = document.getElementsByName("answer");
@@ -58,4 +82,10 @@ checkAnswerBtn.addEventListener("click", checkAnswer);
 
 let apiUrl = `https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple`;
 
-axios.get(apiUrl).then(displayQuestions);
+axios.get(apiUrl).then(saveResponse);
+
+function saveResponse(response) {
+  all_json_data = response.data.results;
+  console.log(all_json_data);
+  displayQuestions(apiIndexQues);
+}
