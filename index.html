@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Project</title>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1 id="heading">Quick Quiz</h1>
+    <div class="quiz-container">
+      <h2 id="displayQues"></h2>
+      <div class="choice-container">
+        <div class="choice-text">
+          <input
+            class="option"
+            type="radio"
+            id="choice1"
+            name="answer"
+            value="choice1"
+          />
+          <label for="Choice1">Choice1</label>
+        </div>
+
+        <div class="choice-text">
+          <input
+            class="option"
+            type="radio"
+            id="choice2"
+            name="answer"
+            value="choice2"
+          />
+          <label for="Choice2">Choice2</label>
+        </div>
+        <div class="choice-text">
+          <input
+            class="option"
+            type="radio"
+            id="choice3"
+            name="answer"
+            value="choice3"
+          />
+          <label for="Choice3">Choice3</label>
+        </div>
+
+        <div class="choice-text">
+          <input
+            class="option"
+            type="radio"
+            id="choice4"
+            name="answer"
+            value="choice4"
+          />
+          <label for="Choice4">Choice4</label>
+        </div>
+      </div>
+      <button id="btn1">Check Answer</button>
+      <button id="btn">Next</button>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
