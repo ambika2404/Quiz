@@ -91,7 +91,7 @@ function checkAnswer() {
   radioButton.forEach((a, b) => {
     if (a.checked) {
       if (incorrectAns[b] === correctAnswer) {
-        alert("answer is correct");
+        alert("This is right answer");
       } else {
         alert("wrong answer");
       }
