@@ -20,6 +20,8 @@ var correctAnswer;
 var apiIndexQues = 0;
 var totalQuestions;
 var all_json_data;
+var userSelection = [];
+
 function displayQuestions(apiIndexQues) {
   let displayQuesElement = document.getElementById("displayQues");
   option = document.querySelectorAll(".option");
@@ -27,7 +29,6 @@ function displayQuestions(apiIndexQues) {
   correctAnswer = all_json_data[apiIndexQues].correct_answer;
 
   incorrectAns.push(correctAnswer);
-  console.log(incorrectAns);
   randomize(incorrectAns);
 
   displayQuesElement.innerHTML = all_json_data[apiIndexQues].question;
@@ -40,6 +41,22 @@ function displayQuestions(apiIndexQues) {
 function nextButton() {
   apiIndexQues++;
   displayQuestions(apiIndexQues);
+  checkedAnswers(apiIndexQues);
+}
+
+function checkedAnswers(index) {
+  var thisisUserSelectedValue = userSelection[index];
+  if (thisisUserSelectedValue === undefined) {
+    for (let i = 0; i < incorrectAns.length; i++) {
+      option[i].checked = false;
+    }
+    return;
+  }
+  for (let i = 0; i < incorrectAns.length; i++) {
+    if (incorrectAns[i] == thisisUserSelectedValue) {
+      option[i].checked = true;
+    }
+  }
 }
 
 var next = document.getElementById("btn");
@@ -50,14 +67,18 @@ function previousButton() {
   console.log(apiIndexQues);
   apiIndexQues--;
   displayQuestions(apiIndexQues);
+  checkedAnswers(apiIndexQues);
 }
 var previous = document.getElementById("btn2");
 previous.addEventListener("click", previousButton);
 // Radio Button
-function userSelectedAnswer(index) {
-  let userSelectedIndex = index.target.value;
-  userSelectedIndex = userSelectedIndex.slice(userSelectedIndex.length - 1) - 1;
-  console.log(userSelectedIndex);
+function userSelectedAnswer() {
+  const radioButton = document.getElementsByName("answer");
+  radioButton.forEach((a, b) => {
+    if (a.checked) {
+      userSelection[apiIndexQues] = incorrectAns[b];
+    }
+  });
 }
 
 const choiceText = document.getElementsByName("answer");
