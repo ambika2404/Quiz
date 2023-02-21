@@ -22,7 +22,32 @@ var totalQuestions;
 var all_json_data;
 var userSelection = [];
 
+function calculateScore() {
+  var score = 0;
+  for (let i = 0; i < all_json_data.length; i++) {
+    if (all_json_data[i].correct_answer === userSelection[i]) {
+      score++;
+    }
+  }
+  var userScore = document.getElementById("score");
+  userScore.innerHTML = `Score ${score} out of 10`;
+}
+
+function calculateScoreButtonVisibility(apiIndexQues) {
+  const checkAnswerBtn = document.getElementById("btn1");
+  checkAnswerBtn.addEventListener("click", calculateScore);
+
+  if (apiIndexQues === 9) {
+    checkAnswerBtn.style.visibility = "visible";
+  } else {
+    checkAnswerBtn.style.visibility = "hidden";
+  }
+}
+
 function displayQuestions(apiIndexQues) {
+  previousButtonVisibility(apiIndexQues);
+  nextButtonVisibility(apiIndexQues);
+  calculateScoreButtonVisibility(apiIndexQues);
   let displayQuesElement = document.getElementById("displayQues");
   option = document.querySelectorAll(".option");
   incorrectAns = [...all_json_data[apiIndexQues].incorrect_answers];
@@ -44,6 +69,17 @@ function nextButton() {
   checkedAnswers(apiIndexQues);
 }
 
+function nextButtonVisibility(apiIndexQues) {
+  var next = document.getElementById("btn");
+  next.addEventListener("click", nextButton);
+
+  if (apiIndexQues === 9) {
+    next.style.visibility = "hidden";
+  } else {
+    next.style.visibility = "visible";
+  }
+}
+
 function checkedAnswers(index) {
   var thisisUserSelectedValue = userSelection[index];
   if (thisisUserSelectedValue === undefined) {
@@ -59,9 +95,6 @@ function checkedAnswers(index) {
   }
 }
 
-var next = document.getElementById("btn");
-next.addEventListener("click", nextButton);
-
 // previous Button
 function previousButton() {
   console.log(apiIndexQues);
@@ -69,8 +102,18 @@ function previousButton() {
   displayQuestions(apiIndexQues);
   checkedAnswers(apiIndexQues);
 }
-var previous = document.getElementById("btn2");
-previous.addEventListener("click", previousButton);
+
+function previousButtonVisibility(apiIndexQues) {
+  var previous = document.getElementById("btn2");
+  previous.addEventListener("click", previousButton);
+
+  if (apiIndexQues === 0) {
+    previous.style.visibility = "hidden";
+  } else {
+    previous.style.visibility = "visible";
+  }
+}
+
 // Radio Button
 function userSelectedAnswer() {
   const radioButton = document.getElementsByName("answer");
@@ -86,20 +129,18 @@ for (var i = 0; i < choiceText.length; i++) {
   choiceText[i].addEventListener("click", userSelectedAnswer);
 }
 
-function checkAnswer() {
-  const radioButton = document.getElementsByName("answer");
-  radioButton.forEach((a, b) => {
-    if (a.checked) {
-      if (incorrectAns[b] === correctAnswer) {
-        alert("answer is correct");
-      } else {
-        alert("wrong answer");
-      }
-    }
-  });
-}
-const checkAnswerBtn = document.getElementById("btn1");
-checkAnswerBtn.addEventListener("click", checkAnswer);
+// function checkAnswer() {
+//   const radioButton = document.getElementsByName("answer");
+//   radioButton.forEach((a, b) => {
+//     if (a.checked) {
+//       if (incorrectAns[b] === correctAnswer) {
+//         alert("answer is correct");
+//       } else {
+//         alert("wrong answer");
+//       }
+//     }
+//   });
+// }
 
 let apiUrl = `https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple`;
 
