@@ -134,15 +134,13 @@ for (var i = 0; i < choiceText.length; i++) {
 //   radioButton.forEach((a, b) => {
 //     if (a.checked) {
 //       if (incorrectAns[b] === correctAnswer) {
-//         alert("This is right answer");
+//         alert("answer is correct");
 //       } else {
 //         alert("wrong answer");
 //       }
 //     }
 //   });
 // }
-const checkAnswerBtn = document.getElementById("btn1");
-checkAnswerBtn.addEventListener("click", checkAnswer);
 
 let apiUrl = `https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple`;
 
