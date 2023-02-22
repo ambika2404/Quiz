@@ -21,8 +21,16 @@ var apiIndexQues = 0;
 var totalQuestions;
 var all_json_data;
 var userSelection = [];
+var showColor = false;
+
+function changeColor() {
+  if (showColor) {
+    checkAnswer();
+  }
+}
 
 function calculateScore() {
+  showColor = true;
   var score = 0;
   for (let i = 0; i < all_json_data.length; i++) {
     if (all_json_data[i].correct_answer === userSelection[i]) {
@@ -60,6 +68,7 @@ function displayQuestions(apiIndexQues) {
   for (let i = 0; i < incorrectAns.length; i++) {
     option[i].nextElementSibling.innerText = incorrectAns[i];
   }
+  changeColor();
 }
 
 //next Button
@@ -129,18 +138,20 @@ for (var i = 0; i < choiceText.length; i++) {
   choiceText[i].addEventListener("click", userSelectedAnswer);
 }
 
-// function checkAnswer() {
-//   const radioButton = document.getElementsByName("answer");
-//   radioButton.forEach((a, b) => {
-//     if (a.checked) {
-//       if (incorrectAns[b] === correctAnswer) {
-//         alert("answer is correct");
-//       } else {
-//         alert("wrong answer");
-//       }
-//     }
-//   });
-// }
+function checkAnswer() {
+  $("label").removeClass("incorrectChoice");
+  $("label").removeClass("correctChoice");
+  console.log(correctAnswer);
+  const radioButton = document.getElementsByName("answer");
+  radioButton.forEach((a, b) => {
+    console.log(a);
+    if (incorrectAns[b] === correctAnswer) {
+      $("label[for=" + a.id + "]").addClass("correctChoice");
+    } else {
+      $("label[for=" + a.id + "]").addClass("incorrectChoice");
+    }
+  });
+}
 
 let apiUrl = `https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple`;
 

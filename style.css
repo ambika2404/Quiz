@@ -3,7 +3,12 @@
 }
 
 body {
-  background-color: white;
+  background: rgb(77, 130, 134);
+  background: radial-gradient(
+    circle,
+    rgba(77, 130, 134, 1) 0%,
+    rgba(80, 8, 65, 1) 100%
+  );
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,22 +16,45 @@ body {
   margin: 0;
   min-height: 80vh;
 }
+#heading {
+  color: #1d1c01;
+  font-size: 80px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-shadow: #fc0 1px 0 10px;
+}
+#score {
+  color: #1d1c01;
+  font-size: 80px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-shadow: #fc0 1px 0 10px;
+}
 
 .quiz-container {
-  background-color: #7bdcef;
+  background: rgb(209, 223, 224);
+  background: radial-gradient(
+    circle,
+    rgba(209, 223, 224, 1) 0%,
+    rgba(125, 218, 232, 1) 50%,
+    rgba(82, 118, 126, 1) 100%
+  );
   width: 50rem;
   height: 20rem;
   padding: 35px;
   border-radius: 3px;
 }
 #displayQues {
+  font-size: 25px;
+  font-weight: bold;
   width: 45rem;
   height: 3rem;
   padding: 10px;
   margin-left: 3px;
+  margin-top: 4px;
 }
 .choice-container {
-  padding: 6px;
+  padding: 8px;
 }
 button {
   background-color: black;
@@ -43,5 +71,12 @@ button:hover {
   color: white;
 }
 .choice-text {
-  padding: 0.2rem;
+  padding: 0.3rem;
+  font-size: 20px;
+}
+.correctChoice {
+  color: green;
+}
+.incorrectChoice {
+  color: red;
 }
